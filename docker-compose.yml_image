@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  web3:
+    image: jungwonalicia/springboot3-web3
+    container_name: springboot_app3
+    ports:
+      - "9090:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db3:3306/demo_db3?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=1212
+      - SPRING_DATA_REDIS_URL=redis://redis3:6379/0
+    depends_on:
+      db3:
+        condition: service_healthy
+      redis3:
+        condition: service_healthy
+    restart: always
+
+  db3:
+    image: mysql:8.0
+    container_name: mysql_db3
+    environment:
+      - MYSQL_ROOT_PASSWORD=1212
+      - MYSQL_DATABASE=demo_db3
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p1212"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - mysql_data3:/var/lib/mysql
+    ports:
+      - "3336:3306"
+    restart: always
+
+  redis3:
+    image: redis:7-alpine
+    container_name: redis3
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: always
+
+volumes:
+  mysql_data3:
