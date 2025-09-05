@@ -35,7 +35,7 @@ jobs:
           context: ./springboot-app3
           file: ./springboot-app3/Dockerfile
           push: true
-          tags: kimhotak/springboot3-web3:latest
+          tags: pinire/springboot3-web3:latest
           platforms: linux/amd64
 
       # 5. 서버 배포 경로 변수 설정
