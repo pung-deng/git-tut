@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web3:
-    image: jungwonalicia/springboot3-web3
+    image: kimhotak/springboot3-web3
     container_name: springboot_app3
     ports:
       - "9090:8080"
